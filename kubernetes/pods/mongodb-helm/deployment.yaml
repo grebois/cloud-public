@@ -79,15 +79,15 @@ spec:
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-#        volumeMounts:
-#        - mountPath: /bitnami/mongodb
-#          name: data
+        volumeMounts:
+        - mountPath: /bitnami/mongodb
+          name: data
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
-#      volumes:
-#      - name: data
-#        persistentVolumeClaim:
-#          claimName: mongodb
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: mongodb
