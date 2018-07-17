@@ -1,3 +1,15 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [MongoDB](#mongodb)
+- [Installing:](#installing)
+- [Creating a static service name to reference mongo](#creating-a-static-service-name-to-reference-mongo)
+- [Creating users:](#creating-users)
+  - [Verifying the replicaset](#verifying-the-replicaset)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 MongoDB
 ============
 
