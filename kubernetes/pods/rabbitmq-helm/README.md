@@ -1,3 +1,4 @@
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
@@ -26,6 +27,33 @@ We are using this helm chart: https://github.com/kubernetes/charts/tree/master/s
 Using helm version: 2.8.1
 
 # Using with make file:
+
+```
+export KUBE_NAMESPACE=rabbitmq
+```
+
+## Install:
+```
+make install
+```
+
+## Updating:
+```
+make upgrade
+```
+
+## Deleting:
+```
+make delete
+```
+
+## Listing helm charts:
+```
+make list
+```
+
+# Using Manually:
+=======
 ```
 export KUBE_NAMESPACE=rabbitmq
 ```
@@ -52,7 +80,7 @@ make list
 
 # Using Manually:
 ```
-export KUBE_NAMESPACE=dev-sb-us-a
+export KUBE_NAMESPACE=rabbitmq
 ```
 
 ```
