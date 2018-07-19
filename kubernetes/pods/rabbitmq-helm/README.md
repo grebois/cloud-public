@@ -1,3 +1,18 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [MongoDB](#mongodb)
+- [Installing:](#installing)
+- [Updating](#updating)
+  - [Enabling SSL Support](#enabling-ssl-support)
+- [Updating from 1.6.1](#updating-from-161)
+- [Exporting metric to Prometheus](#exporting-metric-to-prometheus)
+- [Verify metrics are being published](#verify-metrics-are-being-published)
+- [Finally verify that the target is in prometheus](#finally-verify-that-the-target-is-in-prometheus)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 MongoDB
 ============
 
