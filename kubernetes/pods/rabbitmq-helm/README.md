@@ -53,32 +53,6 @@ make list
 ```
 
 # Using Manually:
-=======
-```
-export KUBE_NAMESPACE=rabbitmq
-```
-
-## Install:
-```
-make install
-```
-
-## Updating:
-```
-make upgrade
-```
-
-## Deleting:
-```
-make delete
-```
-
-## Listing helm charts:
-```
-make list
-```
-
-# Using Manually:
 ```
 export KUBE_NAMESPACE=rabbitmq
 ```
