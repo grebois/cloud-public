@@ -3,10 +3,16 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [MongoDB](#mongodb)
-- [Installing:](#installing)
+- [Using with make file:](#using-with-make-file)
+  - [Install:](#install)
+  - [Updating:](#updating)
+  - [Deleting:](#deleting)
+  - [Listing helm charts:](#listing-helm-charts)
+- [Installing Manually:](#installing-manually)
 - [Creating a static service name to reference mongo](#creating-a-static-service-name-to-reference-mongo)
 - [Creating users:](#creating-users)
   - [Verifying the replicaset](#verifying-the-replicaset)
+- [Updating from 3.4.0](#updating-from-340)
 - [Exporting metric to Prometheus](#exporting-metric-to-prometheus)
 - [Verify metrics are being published](#verify-metrics-are-being-published)
 - [Finally verify that the target is in prometheus](#finally-verify-that-the-target-is-in-prometheus)
@@ -347,6 +353,68 @@ rs0:PRIMARY> rs.conf()
 	}
 }
 rs0:PRIMARY>
+```
+
+# Updating from 3.4.0
+
+First we update the helm repo
+
+```bash
+$ helm repo update
+Hang tight while we grab the latest from your chart repositories...
+...Skip local chart repository
+...Successfully got an update from the "stable" chart repository
+Update Complete. ⎈ Happy Helming!⎈
+```
+
+and the we run:
+
+```bash
+$ make upgrade
+Release "devops-mongo" has been upgraded. Happy Helming!
+LAST DEPLOYED: Thu Jul 19 12:19:01 2018
+NAMESPACE: devops
+STATUS: DEPLOYED
+
+RESOURCES:
+==> v1/Secret
+NAME                                     TYPE    DATA  AGE
+devops-mongo-mongodb-replicaset-admin    Opaque  2     3m
+devops-mongo-mongodb-replicaset-keyfile  Opaque  1     3m
+
+==> v1/ConfigMap
+NAME                                     DATA  AGE
+devops-mongo-mongodb-replicaset-init     1     3m
+devops-mongo-mongodb-replicaset-mongodb  1     3m
+devops-mongo-mongodb-replicaset-tests    1     3m
+
+==> v1/Service
+NAME                             TYPE       CLUSTER-IP  EXTERNAL-IP  PORT(S)    AGE
+devops-mongo-mongodb-replicaset  ClusterIP  None        <none>       27017/TCP  3m
+
+==> v1beta2/StatefulSet
+NAME                             DESIRED  CURRENT  AGE
+devops-mongo-mongodb-replicaset  3        1        3m
+
+==> v1/Pod(related)
+NAME                               READY  STATUS   RESTARTS  AGE
+devops-mongo-mongodb-replicaset-0  0/1    Pending  0         3m
+
+
+NOTES:
+1. After the statefulset is created completely, one can check which instance is primary by running:
+
+    $ for ((i = 0; i < 3; ++i)); do kubectl exec --namespace devops devops-mongo-mongodb-replicaset-$i -- sh -c 'mongo --eval="printjson(rs.isMaster())"'; done
+
+2. One can insert a key into the primary instance of the mongodb replica set by running the following:
+    MASTER_POD_NAME must be replaced with the name of the master found from the previous step.
+
+    $ kubectl exec --namespace devops MASTER_POD_NAME -- mongo --eval="printjson(db.test.insert({key1: 'value1'}))"
+
+3. One can fetch the keys stored in the primary or any of the slave nodes in the following manner.
+    POD_NAME must be replaced by the name of the pod being queried.
+
+    $ kubectl exec --namespace devops POD_NAME -- mongo --eval="rs.slaveOk(); db.test.find().forEach(printjson)"
 ```
 
 # Exporting metric to Prometheus
