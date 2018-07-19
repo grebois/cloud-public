@@ -2,8 +2,13 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [MongoDB](#mongodb)
-- [Installing:](#installing)
+- [RabbitMQ](#rabbitmq)
+- [Using with make file:](#using-with-make-file)
+  - [Install:](#install)
+  - [Updating:](#updating)
+  - [Deleting:](#deleting)
+  - [Listing helm charts:](#listing-helm-charts)
+- [Using Manually:](#using-manually)
 - [Updating](#updating)
   - [Enabling SSL Support](#enabling-ssl-support)
 - [Updating from 1.6.1](#updating-from-161)
@@ -13,14 +18,39 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-MongoDB
+RabbitMQ
 ============
 
 We are using this helm chart: https://github.com/kubernetes/charts/tree/master/stable/rabbitmq-ha
 
 Using helm version: 2.8.1
 
-# Installing:
+# Using with make file:
+```
+export KUBE_NAMESPACE=rabbitmq
+```
+
+## Install:
+```
+make install
+```
+
+## Updating:
+```
+make upgrade
+```
+
+## Deleting:
+```
+make delete
+```
+
+## Listing helm charts:
+```
+make list
+```
+
+# Using Manually:
 ```
 export KUBE_NAMESPACE=dev-sb-us-a
 ```
