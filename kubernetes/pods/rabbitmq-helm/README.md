@@ -17,7 +17,7 @@ helm install \
 --version 1.6.1 \
 --name ${KUBE_NAMESPACE}-rabbitmq \
 --namespace ${KUBE_NAMESPACE} \
---values ./kubernetes/pods/rabbitmq-helm/values.yml \
+--values ./kubernetes/pods/rabbitmq-helm/values.yaml \
 --debug \
 stable/rabbitmq-ha
 ```
@@ -26,7 +26,7 @@ stable/rabbitmq-ha
 ```
 helm upgrade \
 --version 1.6.1 \
---values ./kubernetes/pods/rabbitmq-helm/values.yml \
+--values ./kubernetes/pods/rabbitmq-helm/values.yaml \
 ${KUBE_NAMESPACE}-rabbitmq \
 stable/rabbitmq-ha
 ```
@@ -71,6 +71,101 @@ rabbitmqAmqpsSupport:
     ssl_options.keyfile               = /etc/cert/key.pem
     ssl_options.verify                = verify_peer
     ssl_options.fail_if_no_peer_cert  = false
+```
+
+# Updating from 1.6.1
+
+First we update the helm repo
+
+```bash
+$ helm repo update
+Hang tight while we grab the latest from your chart repositories...
+...Skip local chart repository
+...Successfully got an update from the "stable" chart repository
+Update Complete. ⎈ Happy Helming!⎈
+```
+
+and the we run:
+
+```bash
+$ helm upgrade \
+--values values.yaml \
+${KUBE_NAMESPACE}-rabbitmq \
+stable/rabbitmq-ha
+
+Release "devops-rabbitmq" has been upgraded. Happy Helming!
+LAST DEPLOYED: Thu Jul 19 11:55:28 2018
+NAMESPACE: devops
+STATUS: DEPLOYED
+
+RESOURCES:
+==> v1beta1/RoleBinding
+NAME                         AGE
+devops-rabbitmq-rabbitmq-ha  13m
+
+==> v1/Service
+NAME                                   TYPE       CLUSTER-IP      EXTERNAL-IP  PORT(S)                      AGE
+devops-rabbitmq-rabbitmq-ha-discovery  ClusterIP  None            <none>       15672/TCP,5672/TCP,4369/TCP  13m
+devops-rabbitmq-rabbitmq-ha            ClusterIP  192.168.37.135  <none>       15672/TCP,5672/TCP,4369/TCP  13m
+
+==> v1beta1/StatefulSet
+NAME                         DESIRED  CURRENT  AGE
+devops-rabbitmq-rabbitmq-ha  3        3        13m
+
+==> v1/Pod(related)
+NAME                           READY  STATUS   RESTARTS  AGE
+devops-rabbitmq-rabbitmq-ha-0  1/1    Running  0         13m
+devops-rabbitmq-rabbitmq-ha-1  1/1    Running  0         13m
+devops-rabbitmq-rabbitmq-ha-2  1/1    Running  0         12m
+
+==> v1/Secret
+NAME                         TYPE    DATA  AGE
+devops-rabbitmq-rabbitmq-ha  Opaque  2     13m
+
+==> v1/ConfigMap
+NAME                         DATA  AGE
+devops-rabbitmq-rabbitmq-ha  2     13m
+
+==> v1/ServiceAccount
+NAME                         SECRETS  AGE
+devops-rabbitmq-rabbitmq-ha  1        13m
+
+==> v1beta1/Role
+NAME                         AGE
+devops-rabbitmq-rabbitmq-ha  13m
+
+
+NOTES:
+** Please be patient while the chart is being deployed **
+
+  Credentials:
+
+    Username      : guest
+
+    Password      : $(kubectl get secret --namespace devops devops-rabbitmq-rabbitmq-ha -o jsonpath="{.data.rabbitmq-password}" | base64 --decode)
+    ErLang Cookie : $(kubectl get secret --namespace devops devops-rabbitmq-rabbitmq-ha -o jsonpath="{.data.rabbitmq-erlang-cookie}" | base64 --decode)
+
+
+  RabbitMQ can be accessed within the cluster on port 5672 at devops-rabbitmq-rabbitmq-ha.devops.svc.cluster.local
+
+  To access for outside the cluster execute the following commands:
+
+    export POD_NAME=$(kubectl get pods --namespace devops -l "app=rabbitmq-ha" -o jsonpath="{.items[0].metadata.name}")
+    kubectl port-forward $POD_NAME --namespace devops 5672:5672 15672:15672
+
+  To Access the RabbitMQ AMQP port:
+
+    amqp://127.0.0.1:5672/
+
+  To Access the RabbitMQ Management interface:
+
+    URL : http://127.0.0.1:15672
+
+
+To enable mirroring for all the host:
+
+  export POD_NAME=$(kubectl get pods --namespace devops -l "app=rabbitmq-ha" -o jsonpath="{.items[0].metadata.name}")
+  kubectl exec $POD_NAME --namespace devops -- rabbitmqctl set_policy ha-all "." '{"ha-mode":"all", "ha-sync-mode":"automatic"}' --apply-to all --priority 0
 ```
 
 # Exporting metric to Prometheus
