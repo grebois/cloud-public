@@ -12,10 +12,6 @@
 - [Creating a static service name to reference mongo](#creating-a-static-service-name-to-reference-mongo)
 - [Creating users:](#creating-users)
   - [Verifying the replicaset](#verifying-the-replicaset)
-- [Updating from 3.4.0](#updating-from-340)
-- [Exporting metric to Prometheus](#exporting-metric-to-prometheus)
-- [Verify metrics are being published](#verify-metrics-are-being-published)
-- [Finally verify that the target is in prometheus](#finally-verify-that-the-target-is-in-prometheus)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

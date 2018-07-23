@@ -1,3 +1,14 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Updating from 3.4.0](#updating-from-340)
+- [Exporting metric to Prometheus](#exporting-metric-to-prometheus)
+- [Verify metrics are being published](#verify-metrics-are-being-published)
+- [Finally verify that the target is in prometheus](#finally-verify-that-the-target-is-in-prometheus)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Updating from 3.4.0
 
 First we update the helm repo
